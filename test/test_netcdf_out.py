@@ -56,7 +56,7 @@ def test_single_file(tmp_path, simple_dataset, nocompile_LagrangeFilter):
 
     # check dimensions and sizes, and variables
     d = xr.open_dataset(out)
-    assert d.dims == {"lon": 5, "lat": 4, "time": 0}
+    assert d.sizes == {"lon": 5, "lat": 4, "time": 0}
     assert "var_U" in d.variables
     assert "var_V" not in d.variables
 
@@ -87,7 +87,7 @@ def test_xarray_input(tmp_path, simple_dataset, nocompile_LagrangeFilter):
 
     # check dimensions and sizes, and variables
     d = xr.open_dataset(out)
-    assert d.dims == {"lon": 5, "lat": 4, "time": 0}
+    assert d.sizes == {"lon": 5, "lat": 4, "time": 0}
     assert "var_U" in d.variables
     assert "var_V" not in d.variables
 
@@ -170,7 +170,7 @@ def test_multiple_files(tmp_path, simple_dataset, nocompile_LagrangeFilter):
     assert out.exists()
 
     d = xr.open_dataset(out)
-    assert d.dims == {"lon": 5, "lat": 4, "time": 0}
+    assert d.sizes == {"lon": 5, "lat": 4, "time": 0}
     assert "var_U" in d.variables
     assert "var_V" not in d.variables
 
