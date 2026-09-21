@@ -7,7 +7,7 @@ name = "lagrangian-filtering"
 description = "Temporal filtering of data in a Lagrangian frame of reference"
 authors = [{name = "Angus Gibson"}]
 dynamic = ["version"]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 dependencies = [
     "dask[array]",
     "h5py",
@@ -18,8 +18,6 @@ dependencies = [
     "parcels @ git+https://github.com/angus-g/parcels.git@openmp-loop#egg=parcels",
     "pykdtree",
     "sosfilt",
-    # importlib.metadata is stdlib from 3.8 onwards; use the backport on 3.7
-    "importlib_metadata>=1.0; python_version < '3.8'",
 ]
 
 [project.optional-dependencies]
