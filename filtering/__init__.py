@@ -1,10 +1,4 @@
-import sys
-
-if sys.version_info >= (3, 8):
-    from importlib.metadata import version, PackageNotFoundError
-else:
-    # importlib.metadata was added in Python 3.8; use the backport on 3.7
-    from importlib_metadata import version, PackageNotFoundError
+from importlib.metadata import version, PackageNotFoundError
 
 try:
     __version__ = version("lagrangian-filtering")
