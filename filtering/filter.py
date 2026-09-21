@@ -51,7 +51,7 @@ class Filter(object):
         return signal.butter(order, frequency, filter_type, fs=fs, output="sos")
 
     @staticmethod
-    def pad_window(x, centre_index, min_window):
+    def pad_window(x, time_index, min_window):
         """Perform minimum window padding of an array.
 
         Note:
@@ -59,7 +59,7 @@ class Filter(object):
 
         Args:
             x (numpy.ndarray): An array of (time x particle) of particle dat.a
-            centre_index (int): The index of the seeding time of the particles, to
+            time_index (int): The index of the seeding time of the particles, to
                 identify the forward and backward advection data.
             min_window (int): The minimum window size; particles with at least this
                 many non-NaN datapoints are padded with the last valid value in
