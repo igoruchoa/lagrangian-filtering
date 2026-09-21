@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8", "setuptools_scm_git_archive"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "lagrangian-filtering"
+description = "Temporal filtering of data in a Lagrangian frame of reference"
+authors = [{name = "Angus Gibson"}]
+dynamic = ["version"]
+requires-python = ">=3.8"
+dependencies = [
+    "dask[array]",
+    "h5py",
+    "numpy>=1.17.0",
+    "scipy>=1.2.0",
+    "xarray",
+    "netCDF4",
+    "parcels @ git+https://github.com/angus-g/parcels.git@openmp-loop#egg=parcels",
+    "pykdtree",
+    "sosfilt",
+]
+
+[project.optional-dependencies]
+build = ["pytest", "findiff"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools_scm]
+# reads version from git tags
