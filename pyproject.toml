@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm>=8", "setuptools_scm_git_archive"]
-build-backend = "setuptools.backends.legacy:build"
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6", "setuptools_scm_git_archive"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "lagrangian-filtering"
@@ -27,4 +27,5 @@ build = ["pytest", "findiff"]
 where = ["."]
 
 [tool.setuptools_scm]
-# reads version from git tags
+# reads version from git tags; write_to works across setuptools_scm v6, v7 and v8+
+write_to = "filtering/_version.py"
