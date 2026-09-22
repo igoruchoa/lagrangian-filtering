@@ -812,6 +812,21 @@ class LagrangeFilter(object):
             v_orig = self._variables.get(var, var)
             if isinstance(self._filenames, xr.Dataset):
                 ds_orig = self._filenames[file_dim]
+                # xr.Dataset time coordinates are decoded (cftime/datetime64 objects),
+                # which have dtype=object. netCDF4 cannot create a variable with
+                # dtype=object, so we re-encode them back to numeric values here,
+                # preserving the original units and calendar attributes.
+                if dim == "time" and ds_orig.dtype == object:
+                    t_units = ds_orig.attrs.get("units", "seconds since 1970-01-01")
+                    t_calendar = ds_orig.attrs.get("calendar", "standard")
+                    numeric_vals, _, _ = xr.coding.times.encode_cf_datetime(
+                        ds_orig.values, t_units, calendar=t_calendar
+                    )
+                    ds_orig = xr.DataArray(
+                        numeric_vals.astype(np.float64),
+                        dims=ds_orig.dims,
+                        attrs={"units": t_units, "calendar": t_calendar},
+                    )
             else:
                 if isinstance(self._filenames[var], dict):
                     # time dimension accompanies the data itself, unlike spatial dimensions
