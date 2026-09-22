@@ -816,9 +816,13 @@ class LagrangeFilter(object):
                 # which have dtype=object. netCDF4 cannot create a variable with
                 # dtype=object, so we re-encode them back to numeric values here,
                 # preserving the original units and calendar attributes.
-                if dim == "time" and ds_orig.dtype == object:
+                # netCDF4 only accepts numeric dtypes (i/u/f). xarray decodes
+                # time coordinates into datetime64 (kind='M') or cftime objects
+                # (kind='O'), both of which netCDF4 rejects. Re-encode them to
+                # float64 seconds using the original units/calendar attributes.
+                if dim == "time" and ds_orig.dtype.kind in ("M", "O"):
                     t_units = ds_orig.attrs.get("units", "seconds since 1970-01-01")
-                    t_calendar = ds_orig.attrs.get("calendar", "standard")
+                    t_calendar = ds_orig.attrs.get("calendar", "proleptic_gregorian")
                     numeric_vals, _, _ = xr.coding.times.encode_cf_datetime(
                         ds_orig.values, t_units, calendar=t_calendar
                     )
